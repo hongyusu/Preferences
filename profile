@@ -6,6 +6,8 @@ alias egrep='egrep --color=auto'
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 alias sshx='ssh -X'
 alias du='du -h'
+alias mate='/Applications/TextMate.app/Contents/Resources/mate'
+
 
 
 # some more ls aliases
