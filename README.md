@@ -12,12 +12,14 @@
 1. caffine
 1. Python Packages
 
-   | Package | Installation | 
-   |:-------:|:------------:|
-   | Numpy   | OS           |
-   | Pandas  | pip          |
-   | cPickle | pip          |
-   | Keras   | pip          |
+   | Package     | Installation | 
+   |:-----------:|:------------:|
+   | Numpy       | OS           |
+   | Pandas      | pip          |
+   | cPickle     | pip          |
+   | Keras       | pip          |
+   | sklearn     | pip          |
+   | tensorflow  | pip          |
 
 1. checklist
    1. pandoc
