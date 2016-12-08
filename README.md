@@ -9,8 +9,17 @@
    1. pygments 
 1. ssh key
 1. textmate
+1. caffine
 
 
+1. Python Packages
+
+| Package | Installation | 
+|:-------:|:------------:|
+| Numpy   |              |
+| Pandas  | pip          |
+| cPickle | pip          |
+| Keras   | pip          |
 
 1. checklist
    1. pandoc
