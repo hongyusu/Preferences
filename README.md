@@ -15,11 +15,13 @@
    | Package     | Installation | 
    |:-----------:|:------------:|
    | Numpy       | OS           |
-   | Pandas      | pip          |
-   | cPickle     | pip          |
-   | Keras       | pip          |
-   | sklearn     | pip          |
-   | tensorflow  | pip          |
+   | Pandas      | PIP          |
+   | cPickle     | PIP          |
+   | Keras       | PIP          |
+   | sklearn     | PIP          |
+   | tensorflow  | PIP          |
 
 1. checklist
    1. pandoc
+   1. docker
+   1. reactor
