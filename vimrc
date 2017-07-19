@@ -9,10 +9,31 @@
 "   http://robertmelton.com/contact (many forms of communication)
 " }
 
+execute pathogen#infect()
+
+" nerdtree {
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+    map <C-l> :NERDTreeToggle<CR>
+"}
+
+" indent {
+    map <C-t> :IndentGuidesToggle<CR>
+	colorscheme default
+	let g:indent_guides_guide_size = 1
+	let g:indent_guides_color_change_percent = 0
+	let g:indent_guides_enable_on_vim_startup = 1
+"}
+
 " Basics {
     set nocompatible " explicitly get out of vi-compatible mode
     set noexrc " don't use local version of .(g)vimrc, .exrc
     set background=dark " we plan to use a dark background
+    syntax on " syntax highlighting on
+    syntax enable
+    "colorscheme solarized
     set cpoptions=aABceFsmq
     "             |||||||||
     "             ||||||||+-- When joining lines, leave the cursor 
@@ -29,7 +50,6 @@
     "             ||+-- A backslash has no special meaning in mappings
     "             |+-- :write updates alternative file name
     "             +-- :read updates alternative file name
-    syntax on " syntax highlighting on
 " }
 
 " General {
@@ -89,7 +109,7 @@
                          " 'press a key' prompt
     set showcmd " show the command being typed
     set showmatch " show matching brackets
-set sidescrolloff=10 " Keep 5 lines at the size
+    set sidescrolloff=10 " Keep 5 lines at the size
     set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
     "              | | | | |  |   |      |  |     |    |
     "              | | | | |  |   |      |  |     |    + current 
@@ -114,7 +134,7 @@ set sidescrolloff=10 " Keep 5 lines at the size
                           " and let gq format comments
     set ignorecase " case insensitive by default
     set infercase " case inferred by default
-    "set nowrap " do not wrap line
+    set nowrap " do not wrap line
     set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
     set smartcase " if there are caps, go case-sensitive
     set shiftwidth=8 " auto-indent amount when using cindent, 
@@ -129,7 +149,7 @@ set sidescrolloff=10 " Keep 5 lines at the size
     set foldenable " Turn on folding
     set foldmarker={,} " Fold C style code (only use this as default 
                         " if you use a high foldlevel)
-set foldmethod=marker " Fold on the marker
+    set foldmethod=marker " Fold on the marker
     set foldlevel=100 " Don't autofold anything (but I can still 
                       " fold manually)
     set foldopen=block,hor,mark,percent,quickfix,tag " what movements
@@ -216,25 +236,25 @@ au BufRead,BufNewFile *.notes set spell
 " }
 
 " GUI Settings {
-if has("gui_running")
-    " Basics {
-        colorscheme evening " my color scheme (only works in GUI)
-        "set columns=180 " perfect size for me
-        set guifont=Consolas:h10 " My favorite font
-        set guioptions=ce 
-        "              ||
-        "              |+-- use simple dialogs rather than pop-ups
-        "              +  use GUI tabs, not console style tabs
-        "set lines=55 " perfect size for me
-        set mousehide " hide the mouse cursor when typing
-    " }
-
-    " Font Switching Binds {
-        map <F8> <ESC>:set guifont=Consolas:h8<CR>
-        map <F9> <ESC>:set guifont=Consolas:h10<CR>
-        map <F10> <ESC>:set guifont=Consolas:h12<CR>
-        map <F11> <ESC>:set guifont=Consolas:h16<CR>
-        map <F12> <ESC>:set guifont=Consolas:h20<CR>
-                " }
-        endif
+"if has("gui_running")
+"    " Basics {
+"        colorscheme evening " my color scheme (only works in GUI)
+"        set columns=180 " perfect size for me
+"        set guifont=Consolas:h10 " My favorite font
+"        set guioptions=ce 
+"        "              ||
+"        "              |+-- use simple dialogs rather than pop-ups
+"        "              +  use GUI tabs, not console style tabs
+"        set lines=55 " perfect size for me
+"        set mousehide " hide the mouse cursor when typing
+"    " }
+"
+"    " Font Switching Binds {
+"        map <F8> <ESC>:set guifont=Consolas:h8<CR>
+"        map <F9> <ESC>:set guifont=Consolas:h10<CR>
+"        map <F10> <ESC>:set guifont=Consolas:h12<CR>
+"        map <F11> <ESC>:set guifont=Consolas:h16<CR>
+"        map <F12> <ESC>:set guifont=Consolas:h20<CR>
+"                " }
+"        endif
 " }

@@ -20,6 +20,8 @@
    | Keras       | PIP          |
    | sklearn     | PIP          |
    | tensorflow  | PIP          |
+   | virtualenv  | PIP          |
+
 
 1. checklist
    1. pandoc
