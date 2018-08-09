@@ -1,31 +1,70 @@
-" Modeline and Notes {
-"   vim: set foldmarker={,} foldlevel=0 spell:
-"
-"   This is my personal .vimrc, I don't recommend you copy it, just 
-"   use the "   pieces you want(and understand!).  When you copy a 
-"   .vimrc in its entirety, weird and unexpected things can happen.
-"
-"   If you find an obvious mistake hit me up at:
-"   http://robertmelton.com/contact (many forms of communication)
-" }
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall | source $MYVIMRC
+endif
 
-execute pathogen#infect()
+" Plugin {
+    call plug#begin('~/.vim/plugged')
+    Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+    Plug 'bling/vim-airline'
+    Plug 'jacoborus/tender' " Color
+    "Plug 'tpope/vim-sensible'
+    "Plug 'scrooloose/syntastic'
+    "Plug 'nvie/vim-flake8'
+    "Plug 'ctrlpvim/ctrlp.vim'
+    "Plug 'godlygeek/tabular'
+    "Plug 'ervandew/supertab'
+    "Plug 'honza/vim-snippets'
+    "Plug 'airblade/vim-gitgutter'
+    "Plug 'tpope/vim-fugitive'
+    "Plug 'flazz/vim-colorschemes' " http://vimcolors.com/?utf8=%E2%9C%93&bg=dark&colors=term&order=newest&page=3
+
+    " You complete me need custom compiled vim on some systems and installing the plugin it needs to be compiled.
+    " Plug 'valloric/youcompleteme'
+    "In the folder .vim/plugged/youcompleteme run the command ./install.py
+    "let g:ycm_python_binary_path = '/usr/bin/python3'
+
+    "Plug 'davidhalter/jedi-vim'
+
+    "Plug 'sirver/ultisnips'
+    " Read https://github.com/honza/vim-snippets/blob/master/UltiSnips/tex.snippets
+    " Read https://github.com/honza/vim-snippets/blob/master/UltiSnips/python.snippets
+    call plug#end()
+" }
 
 " nerdtree {
     autocmd StdinReadPre * let s:std_in=1
     autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
     autocmd StdinReadPre * let s:std_in=1
     autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+    let g:NERDTreeIgnore = ['\.pyc$']
+    let g:NERDTreeDirArrowExpandable = '+'
+    let g:NERDTreeDirArrowCollapsible = '-'
+    let g:python_version_2 = 1
     map <C-l> :NERDTreeToggle<CR>
 "}
 
-" indent {
-    map <C-t> :IndentGuidesToggle<CR>
-	colorscheme default
-	let g:indent_guides_guide_size = 1
-	let g:indent_guides_color_change_percent = 0
-	let g:indent_guides_enable_on_vim_startup = 1
-"}
+" Colors {
+    let g:rehash256 = 1
+    let g:solarized_termcolors=256
+    set t_Co=256
+    set background=dark
+    colorscheme tender
+    set t_BE= "Avoid 0~ and 1~ when copy pasting
+" }
+
+" Plugin setting {
+    " Setup plugins settings
+    setlocal foldmethod=manual
+    let g:airline#extensions#tabline#enabled = 1
+    let g:pymode_rope = 0
+    syntax enable
+    syntax on
+    let python_highlight_all=1
+" }
+
+" Reformat JSON using pythons json tool
+nmap =j :%!python -c "import json, sys, collections; print(json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=2))"<CR>
 
 " Basics {
     set nocompatible " explicitly get out of vi-compatible mode
@@ -86,6 +125,8 @@ execute pathogen#infect()
 " Vim UI {
     "set cursorcolumn " highlight the current column
     "set cursorline " highlight current line
+    highlight Search term=standout ctermfg=3 cterm=standout
+    highlight Visual term=standout ctermfg=4 cterm=standout
     set incsearch " BUT do highlight as you type you 
                    " search phrase
     set laststatus=2 " always show the status line
@@ -127,6 +168,7 @@ execute pathogen#infect()
     "              +-- full path to file in the buffer
 " }
 
+
 " Text Formatting/Layout {
     set completeopt= " don't use a pop up menu for completions
     set expandtab " no real tabs please!
@@ -145,55 +187,60 @@ execute pathogen#infect()
                    " set list on
 " }
 
-" Folding {
-    set foldenable " Turn on folding
-    set foldmarker={,} " Fold C style code (only use this as default 
-                        " if you use a high foldlevel)
-    set foldmethod=marker " Fold on the marker
-    set foldlevel=100 " Don't autofold anything (but I can still 
-                      " fold manually)
-    set foldopen=block,hor,mark,percent,quickfix,tag " what movements
-                                                      " open folds 
-    function SimpleFoldText() " {
-        return getline(v:foldstart).' '
-    endfunction " }
-    set foldtext=SimpleFoldText() " Custom fold text function 
-                                   " (cleaner than default)
+
+" Flake8 checking {
+    " Syntastic - https://lintlyci.github.io/Flake8Rules/
+    let g:syntastic_python_checkers = ['flake8']
+    " [E221] multiple spaces before operator
+    " [E128] Continuation line under-indented for visual indent
+    " [E221] multiple spaces before operator
+    " [E265] block comment should start with '# '
+    " [E501] Line too long (82 &gt; 79 characters)
+    let g:syntastic_python_flake8_args="--ignore=E128,E221,E265,E501"
+    "let g:syntastic_always_populate_loc_list = 1
+    "let g:syntastic_auto_loc_list = 0
+    let g:syntastic_check_on_open = 1
+    let g:syntastic_check_on_wq = 0
+    "let g:syntastic_quiet_messages = { "type": "style" }
 " }
 
-" Plugin Settings {
-    let b:match_ignorecase = 1 " case is stupid
 
-    let perl_extended_vars=1 " highlight advanced perl vars 
-                              " inside strings
 
-    " TagList Settings {
-        let Tlist_Auto_Open=0 " let the tag list open automagically
-        let Tlist_Compact_Format = 1 " show small menu
-        let Tlist_Ctags_Cmd = 'ctags' " location of ctags
-        let Tlist_Enable_Fold_Column = 0 " do show folding tree
-        let Tlist_Exist_OnlyWindow = 1 " if you are the last, kill 
-                                        " yourself
-        let Tlist_File_Fold_Auto_Close = 0 " fold closed other trees
-        let Tlist_Sort_Type = "name" " order by 
-        let Tlist_Use_Right_Window = 1 " split to the right side
-                                        " of the screen
-        let Tlist_WinWidth = 40 " 40 cols wide, so i can (almost always)
-                                 " read my functions
-        " Language Specifics {
-            " just functions and classes please
-            let tlist_aspjscript_settings = 'asp;f:function;c:class' 
-            " just functions and subs please
-            let tlist_aspvbs_settings = 'asp;f:function;s:sub' 
-            " don't show variables in freaking php
-            let tlist_php_settings = 'php;c:class;d:constant;f:function' 
-            " just functions and classes please
-            let tlist_vb_settings = 'asp;f:function;c:class' 
-        " }
-" }
+" Spelling {
+    " Spell checker
+    highlight clear SpellBad
+    highlight SpellBad term=standout ctermfg=1 term=underline cterm=underline
+    highlight clear SpellCap
+    highlight SpellCap term=underline ctermfg=1 cterm=underline
+    highlight clear SpellRare
+    highlight SpellRare term=underline ctermfg=1 cterm=underline
+    highlight clear SpellLocal
+    highlight SpellLocal term=underline ctermfg=1 cterm=underline
+    
+    "switch spellcheck languages
+    let g:myLang = 0
+    let g:myLangList = [ "nospell", "en_us"]
+    function! MySpellLang()  "loop through languages
+      let g:myLang = g:myLang + 1
+      if g:myLang >= len(g:myLangList) | let g:myLang = 0 | endif
+      if g:myLang == 0 | set nospell | endif
+      if g:myLang == 1 | setlocal spell spelllang=en_us | endif
+      echo "language:" g:myLangList[g:myLang]
+    endf
+    map <F2> :call MySpellLang()<CR>
 " }
 
-" Mappings {
+" Loading {
+    " Tell vim to remember certain things when we exit, see http://vim.wikia.com/wiki/VimTip80
+    set viminfo='20,\"300,:20,%,n~/.viminfo
+    
+    " when we reload, tell vim to restore the cursor to the saved position
+    if has("autocmd")
+      au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    endif
+" }
+
+" Key Mappings {
     " ROT13 - fun
     map <F12> ggVGg?
 
@@ -202,59 +249,9 @@ execute pathogen#infect()
     "noremap <space> <C-f>
 
     " Make Arrow Keys Useful Again {
-        noremap <left> <C-W>h
-        noremap <right> <C-W>l
-        map <down> :bp<ENTER>
-        map <up> :bn<ENTER>
+	noremap <left> <C-W>h
+	noremap <right> <C-W>l
+	map <down> :bp<ENTER>
+	map <up> :bn<ENTER>
     " }
-" }
-
-" Autocommands {
-    " Ruby {
-        " ruby standard 2 spaces, always
-        au BufRead,BufNewFile *.rb,*.rhtml set shiftwidth=2 
-        au BufRead,BufNewFile *.rb,*.rhtml set softtabstop=2 
-    " }
-    " Notes {
-        " I consider .notes files special, and handle them differently, I
-        " should probably put this in another file
-        au BufRead,BufNewFile *.notes set foldlevel=2
-        au BufRead,BufNewFile *.notes set foldmethod=indent
-        au BufRead,BufNewFile *.notes set foldtext=foldtext()
-        au BufRead,BufNewFile *.notes set listchars=tab:\ \ 
-        au BufRead,BufNewFile *.notes set noexpandtab
-        au BufRead,BufNewFile *.notes set shiftwidth=8
-        au BufRead,BufNewFile *.notes set softtabstop=8
-        au BufRead,BufNewFile *.notes set tabstop=8
-        au BufRead,BufNewFile *.notes set syntax=notes
-        au BufRead,BufNewFile *.notes set nocursorcolumn
-        au BufRead,BufNewFile *.notes set nocursorline
-        au BufRead,BufNewFile *.notes set guifont=Consolas:h12
-au BufRead,BufNewFile *.notes set spell
-    " }
-    au BufNewFile,BufRead *.ahk setf ahk 
-" }
-
-" GUI Settings {
-"if has("gui_running")
-"    " Basics {
-"        colorscheme evening " my color scheme (only works in GUI)
-"        set columns=180 " perfect size for me
-"        set guifont=Consolas:h10 " My favorite font
-"        set guioptions=ce 
-"        "              ||
-"        "              |+-- use simple dialogs rather than pop-ups
-"        "              +  use GUI tabs, not console style tabs
-"        set lines=55 " perfect size for me
-"        set mousehide " hide the mouse cursor when typing
-"    " }
-"
-"    " Font Switching Binds {
-"        map <F8> <ESC>:set guifont=Consolas:h8<CR>
-"        map <F9> <ESC>:set guifont=Consolas:h10<CR>
-"        map <F10> <ESC>:set guifont=Consolas:h12<CR>
-"        map <F11> <ESC>:set guifont=Consolas:h16<CR>
-"        map <F12> <ESC>:set guifont=Consolas:h20<CR>
-"                " }
-"        endif
 " }
