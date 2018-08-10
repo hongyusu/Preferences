@@ -1,13 +1,19 @@
-if empty(glob('~/.vim/autoload/plug.vim'))
-  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  autocmd VimEnter * PlugInstall | source $MYVIMRC
-endif
+" Introduction {
+"   vim configuration
+"   Hongyu Su
+"   hongyu.su@me.com
+" }
 
-" Plugin {
+
+" Plugin management {
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall | source $MYVIMRC
+    endif
     call plug#begin('~/.vim/plugged')
+    Plug 'jacoborus/tender'     " Color
+    Plug 'bling/vim-airline'    " theme
     Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-    Plug 'bling/vim-airline'
-    Plug 'jacoborus/tender' " Color
     "Plug 'tpope/vim-sensible'
     "Plug 'scrooloose/syntastic'
     "Plug 'nvie/vim-flake8'
@@ -18,21 +24,18 @@ endif
     "Plug 'airblade/vim-gitgutter'
     "Plug 'tpope/vim-fugitive'
     "Plug 'flazz/vim-colorschemes' " http://vimcolors.com/?utf8=%E2%9C%93&bg=dark&colors=term&order=newest&page=3
-
     " You complete me need custom compiled vim on some systems and installing the plugin it needs to be compiled.
-    " Plug 'valloric/youcompleteme'
+    "Plug 'valloric/youcompleteme'
     "In the folder .vim/plugged/youcompleteme run the command ./install.py
     "let g:ycm_python_binary_path = '/usr/bin/python3'
-
     "Plug 'davidhalter/jedi-vim'
-
     "Plug 'sirver/ultisnips'
     " Read https://github.com/honza/vim-snippets/blob/master/UltiSnips/tex.snippets
     " Read https://github.com/honza/vim-snippets/blob/master/UltiSnips/python.snippets
     call plug#end()
 " }
 
-" nerdtree {
+" Nerdtree {
     autocmd StdinReadPre * let s:std_in=1
     autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
     autocmd StdinReadPre * let s:std_in=1
@@ -54,7 +57,6 @@ endif
 " }
 
 " Plugin setting {
-    " Setup plugins settings
     setlocal foldmethod=manual
     let g:airline#extensions#tabline#enabled = 1
     let g:pymode_rope = 0
@@ -63,16 +65,16 @@ endif
     let python_highlight_all=1
 " }
 
-" Reformat JSON using pythons json tool
-nmap =j :%!python -c "import json, sys, collections; print(json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=2))"<CR>
+" JSON format {
+"nmap =j :%!python -c "import json, sys, collections; print(json.dumps(json.load(sys.stdin, object_pairs_hook=collections.OrderedDict), indent=2))"<CR>
+" }
 
 " Basics {
     set nocompatible " explicitly get out of vi-compatible mode
     set noexrc " don't use local version of .(g)vimrc, .exrc
-    set background=dark " we plan to use a dark background
+    "set background=dark " we plan to use a dark background
     syntax on " syntax highlighting on
     syntax enable
-    "colorscheme solarized
     set cpoptions=aABceFsmq
     "             |||||||||
     "             ||||||||+-- When joining lines, leave the cursor 
@@ -102,7 +104,7 @@ nmap =j :%!python -c "import json, sys, collections; print(json.dumps(json.load(
     set hidden " you can change buffers without saving
     " (XXX: #VIM/tpope warns the line below could break things)
     set iskeyword+=_,$,@,%,# " none of these are word dividers 
-    set mouse=a " use mouse everywhere
+    "set mouse=a " use mouse everywhere
     set noerrorbells " don't make noise
     set whichwrap=b,s,h,l,<,>,~,[,] " everything wraps
     "             | | | | | | | | |
@@ -151,7 +153,7 @@ nmap =j :%!python -c "import json, sys, collections; print(json.dumps(json.load(
     set showcmd " show the command being typed
     set showmatch " show matching brackets
     set sidescrolloff=10 " Keep 5 lines at the size
-    set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
+    "set statusline=%F%m%r%h%w[%L][%{&ff}]%y[%p%%][%04l,%04v]
     "              | | | | |  |   |      |  |     |    |
     "              | | | | |  |   |      |  |     |    + current 
     "              | | | | |  |   |      |  |     |       column
@@ -179,11 +181,11 @@ nmap =j :%!python -c "import json, sys, collections; print(json.dumps(json.load(
     set nowrap " do not wrap line
     set shiftround " when at 3 spaces, and I hit > ... go to 4, not 5
     set smartcase " if there are caps, go case-sensitive
-    set shiftwidth=8 " auto-indent amount when using cindent, 
+    set shiftwidth=4 " auto-indent amount when using cindent, 
                       " >>, << and stuff like that
-    set softtabstop=8 " when hitting tab or backspace, how many spaces 
+    set softtabstop=4 " when hitting tab or backspace, how many spaces 
                        "should a tab be (see expandtab)
-    set tabstop=8 " real tabs should be 8, and they will show with 
+    set tabstop=4 " real tabs should be 8, and they will show with 
                    " set list on
 " }
 
