@@ -6,10 +6,11 @@ startup_message off
 # visable bell
 vbell_msg "beep"
 # Change scrollback to 10000 lines
-defscrollback 10000
+defscrollback 30000
 # status line at the bottom
 hardstatus on
 hardstatus alwayslastline
 hardstatus string "%{.bW}%-w%{.rW}%f%n %t%{-}%+w %=%{..G}[%H] [%l] %{..Y} %m/%d %c "
 # allow scrollback to work in terminal programs (like putty)
 termcapinfo xterm ti@:te@
+term screen-256color

@@ -7,6 +7,8 @@
 - .profile
 - .screenrc
 - git
+- npm 
+- ng
 
 # Softwares
 - caffine
@@ -18,4 +20,4 @@
 # Others
 - textmate
 - jekyll
-  - pygments 
+- pygments 
