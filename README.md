@@ -1,3 +1,10 @@
+# General
+- ssh key
+
+  '''sh
+  ssh-keygen -t rsa -b 4096 -C "hongyu.su@me.com"
+  '''
+
 
 
 # Tools
