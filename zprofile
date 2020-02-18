@@ -4,11 +4,10 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias tree="find . -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
-alias sshx='ssh -X'
 alias du='du -h'
-alias screen='/usr/local/bin/screen'
+#alias screen='/usr/local/bin/screen'
 #alias mate='/Applications/TextMate.app/Contents/Resources/mate'
-alias sublime='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
+#alias sublime='/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl'
 
 
 
@@ -34,7 +33,7 @@ alias lr='ls -R'
 # export JAVA_HOME=$(/usr/libexec/java_home -v 9)
 #
 # # Java 1.8
-export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
+#export JAVA_HOME=$(/usr/libexec/java_home -v 1.8)
 #
 # # Java 1.7
 # export JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
