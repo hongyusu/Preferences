@@ -1,6 +1,6 @@
 
 # load my bash profile
-shell -$SHELL
+shell $SHELL
 # don't display the copyright page
 startup_message off
 # visable bell
